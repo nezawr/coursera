@@ -48,19 +48,14 @@ def get_edges(coordinates):
 #edges is a sorted non-decresing list of (i1,i2,cost) tuples 
 #i1 and i2 are indices in coordinates list of the two vertices connected via edge weighted with cost
 def Kruskal(edges, coordinates, k):
-    clusters = len(coordinates)
     for vertex in coordinates:
         MakeSet(vertex)
-    x = set()
+    mintree_edges = []
     for edge in edges:
-        if k <= clusters:
-            if Find(coordinates[edge[0]]) != Find(coordinates[edge[1]]):  
-                Union(coordinates[edge[0]], coordinates[edge[1]])
-                clusters -= 1
-            else:
-                distance = edge[2]
-                break
-    return distance
+        if Find(coordinates[edge[0]]) != Find(coordinates[edge[1]]):  
+            Union(coordinates[edge[0]], coordinates[edge[1]])
+            mintree_edges.append(edge[2])
+    return mintree_edges[-(k-1)]
 
 def construct_vertex(x,y):
     return Vertex((x,y))
