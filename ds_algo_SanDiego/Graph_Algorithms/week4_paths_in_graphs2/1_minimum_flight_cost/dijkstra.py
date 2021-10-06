@@ -2,11 +2,24 @@
 
 import sys
 import queue
-
+import heapq
 
 def distance(adj, cost, s, t):
-    #write your code here
-    return -1
+    #This is Dijkstra
+    h = []
+    dist = [float('inf') for i in range(len(adj))]
+    prev = [-1 for i in range(len(adj))]
+    dist[s] = 0
+    heapq.heappush(h, (dist[s],s))
+    while len(h) != 0:
+        #known vertex distance from s and vertex itself
+        d, u = heapq.heappop(h)
+        for i, v in enumerate(adj[u]):
+            if dist[v] > dist[u] + cost[u][i]:
+                dist[v] = dist[u] + cost[u][i]
+                heapq.heappush(h, (dist[v], v))
+                prev[v] = u
+    return -1 if dist[t] == float('inf') else dist[t]
 
 
 if __name__ == '__main__':
